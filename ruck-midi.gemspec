@@ -21,7 +21,15 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
      ".gitignore",
-     "Rakefile"
+     "README",
+     "Rakefile",
+     "VERSION",
+     "bin/ruck_midi",
+     "examples/ex01.rb",
+     "examples/ex02.rb",
+     "lib/ruck/midi.rb",
+     "lib/ruck/midi/midi.rb",
+     "ruck-midi.gemspec"
   ]
   s.homepage = %q{http://github.com/alltom/ruck-midi}
   s.rdoc_options = ["--charset=UTF-8"]
