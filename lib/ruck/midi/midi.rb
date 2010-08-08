@@ -19,21 +19,19 @@ module Ruck
         super
       end
   
-      def sim_to(new_now)
-        d = new_now - @now
-    
-        @midi.tick(d)
+      def fast_forward(dt)
+        super
+        
+        @midi.tick(dt)
     
         # sync with wall clock
         if @real_time
           actual_now = Time.now
-          simulated_now = @start_time + (new_now.to_f / @midi.ppqn / @midi.bpm * 60.0)
+          simulated_now = @start_time + (now.to_f / @midi.ppqn / @midi.bpm * 60.0)
           if simulated_now > actual_now
             sleep(simulated_now - actual_now)
           end
         end
-    
-        @now = new_now
       end
     end
 
@@ -134,18 +132,8 @@ module Ruck
         SHREDULER.now
       end
 
-      def spork(name = "unnamed", &shred)
-        SHREDULER.spork(name, &shred)
-      end
-
       def wait(pulses)
-        SHREDULER.current_shred.yield(pulses)
-      end
-
-      def finish
-        shred = SHREDULER.current_shred
-        SHREDULER.remove_shred shred
-        shred.finish
+        Shred.yield(pulses)
       end
   
       def note_on(note, velocity = 127, channel = 0, track = 0)

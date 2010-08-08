@@ -21,6 +21,7 @@ FILENAMES = ARGV[3..-1]
 # state
 $midi = Ruck::MIDI::MIDIOutput.new(ALSO_LIVE, MIDI_FILENAME, NUM_TRACKS)
 SHREDULER = Ruck::MIDI::MIDIShreduler.new($midi, ALSO_LIVE)
+SHREDULER.make_convenient
 
 at_exit { $midi.save }
 
@@ -32,7 +33,7 @@ FILENAMES.each do |filename|
 end
 
 FILENAMES.each do |filename|
-  SHREDULER.spork(filename) do
+  SHREDULER.spork do
     include Ruck::MIDI::ShredLocal
     require filename
   end
