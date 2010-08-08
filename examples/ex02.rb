@@ -73,4 +73,4 @@ shreds << spork { play_chords }
 shreds << spork { play_melody }
 
 wait 16.beats
-shreds.each { |s| s.finish }
+shreds.each { |s| s.kill }
